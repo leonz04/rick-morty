@@ -1,0 +1,38 @@
+.card__location{
+    display: flex;
+    flex-direction: column;
+    background-color:rgb(7, 34, 38);
+    min-width: 600px;
+    max-width: 650px;
+    align-items: center;
+    justify-content: center;
+    margin: 3em;
+    border: 1.5px solid black;
+    border-radius: 15px;
+    box-shadow: 2px 2px 7px black ;
+    
+    
+}
+
+.card__location__name{
+    color:rgb(123 185 36);
+    text-align: center;
+}
+
+.card__location__info{
+    color: whitesmoke;
+    display: flex;
+}
+
+.card__location__item{
+    text-align: center;
+    padding: 1em;
+}
+
+.card__location__label{
+    display: block;
+}
+.card__location__value{
+    font-weight: 100;
+    display: block;
+}

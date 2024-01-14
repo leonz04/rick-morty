@@ -1,0 +1,33 @@
+.header{
+    width: 100%;
+    background-color: darkslategrey;
+}
+.nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav__menu{
+    display: flex;
+    padding: 0.9em;
+    column-gap: 1em;
+    
+}
+
+.nav__menu__item{
+    min-width: 100px;
+    color: white;
+    padding: 0.3em;
+    border: 1px solid white;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.nav__menu__item:hover{
+    cursor: pointer;
+    background-color:white ;
+    color:black;
+    font-weight: 700;
+    box-shadow: 0em 0em 1em teal;
+}
+

@@ -18,8 +18,8 @@ const EpisodeCard = ({ episode }) => {
 
         
           
-          <details className='details'>
-          <summary className='summary'>Personajes</summary>
+          <details>
+          <summary>Personajes</summary>
           <div className='container__characters'>
             {
                 characters.map(char => (

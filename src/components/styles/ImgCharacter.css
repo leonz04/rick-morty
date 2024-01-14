@@ -4,4 +4,9 @@
     aspect-ratio: 1;
     cursor:pointer;
     border-radius: 50%;
+    transition: 300ms ease transform;
+}
+
+.img__character:hover{
+    transform: scale(2);
 }

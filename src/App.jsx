@@ -18,6 +18,8 @@ function App() {
 
   const [page, setPage] = useState(1)
   const [totalResidents, setTotalResidents] = useState(0)
+  const [limitResidents, setLimitResidents]=useState(8)
+
 
   const handleChange = (event, value) => {
     event.preventDefault
@@ -87,9 +89,9 @@ function App() {
 
   }
 
-  const startIndex = (page - 1) * 10; // Índice inicial del slice
-  const endIndex = startIndex + 10; // Índice final del slice
-  const residents = location?.residents.slice(startIndex, endIndex) || []; // Datos filtrados
+  let startIndex = (page - 1) * limitResidents; // Índice inicial del slice
+  let endIndex = startIndex + limitResidents; // Índice final del slice
+  let residents = location?.residents.slice(startIndex, endIndex) || []; 
 
   console.log('residents desde APP');
   console.log(residents)
@@ -99,7 +101,7 @@ function App() {
   const [value, setValue] = useState('')
   const [dimensionSelected, setDimensionSelected] = useState()
 
-  const [currentSection, setCurrentSection] = useState('locations')
+  const [currentSection, setCurrentSection] = useState('')
 
 
 
@@ -137,7 +139,7 @@ function App() {
   }
 
   const renderSuggestion = (suggestion) => (
-    <div className='sugerencia' onClick={() => seleccionarDimension(suggestion)}>
+    <div onClick={() => seleccionarDimension(suggestion)}>
       {`${suggestion.name} - ${suggestion.id}`}
 
     </div>
@@ -157,7 +159,6 @@ function App() {
     onChange,
   };
 
-
   const eventEnter = (e) => {
     if (e.key == 'Enter') {
       let split = e.target.value.split('-');
@@ -169,16 +170,17 @@ function App() {
       seleccionarDimension(dimension)
     }
   }
-
-
-
   return (
 
-    <div>
+    <div className='app'>
       <div className='banner'></div>
       <h1>Rick and Morty</h1>
       <NavigationMenu
-      setCurrentSection={setCurrentSection} />
+      setCurrentSection={setCurrentSection}
+      currentSection={currentSection}
+      setInputValue={setInputValue}
+      setPage={setPage}
+      setLimitResidents={setLimitResidents} />
       
       {/*<form onSubmit={searchLocation}>
         <input ref={inputLocation} type='text' />
@@ -193,7 +195,8 @@ function App() {
           : (currentSection == 'locations'
               ?
               <>
-              <Autosuggest
+              <div className='search'>
+              <Autosuggest 
         suggestions={dimensiones ? dimensiones : []}
         onSuggestionsFetchRequested={onSuggestionsFetchRequested}
         onSuggestionsClearRequested={onSuggestionsClearRequested}
@@ -202,9 +205,10 @@ function App() {
         inputProps={inputProps}
         onSuggestionSelected={eventEnter}
       />
-      <button onClick={searchLocation}>Chekar Esado</button>
-    
-              <LocationCard
+      <button className='btn__search__location' onClick={searchLocation}>Consultar Dimension</button>
+      </div>
+
+              <LocationCard 
                 location={location}
               />
               <div className='container__residents'>
@@ -218,9 +222,10 @@ function App() {
                 }
               </div>
               <Pagination
-                count={parseInt(Math.ceil(totalResidents / 10), 10)}
+                count={parseInt(Math.ceil(totalResidents / limitResidents),10)}
                 page={page}
-                onChange={handleChange} />
+                onChange={handleChange} 
+                color="primary"/>
                 </>
               : (<div className='container__residents'>
                 {
