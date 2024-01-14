@@ -101,7 +101,7 @@ function App() {
   const [value, setValue] = useState('')
   const [dimensionSelected, setDimensionSelected] = useState()
 
-  const [currentSection, setCurrentSection] = useState('')
+  const [currentSection, setCurrentSection] = useState('locations')
 
 
 
