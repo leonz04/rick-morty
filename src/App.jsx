@@ -18,7 +18,6 @@ function App() {
 
   const [page, setPage] = useState(1)
   const [totalResidents, setTotalResidents] = useState(0)
-  const [limitPerPage, setLimitPerPage] = useState(8)
 
   const handleChange = (event, value) => {
     event.preventDefault
@@ -42,13 +41,13 @@ function App() {
   const [location, getLocation, hasError] = useFetch(url)
   const [allDimensions, getAllDimensions, doError] = useFetch(`https://rickandmortyapi.com/api/location/${allLocations}`)
 
-  const [allEpisodes, getAllEpisodes, errorEpisodes]=useFetch(urlEpisodes)
-  
-useEffect(()=>{
-  getAllEpisodes();
-},[])
+  const [allEpisodes, getAllEpisodes, errorEpisodes] = useFetch(urlEpisodes)
 
-console.log(allEpisodes)
+  useEffect(() => {
+    getAllEpisodes();
+  }, [])
+
+  console.log(allEpisodes)
 
 
   useEffect(() => {
@@ -91,8 +90,8 @@ console.log(allEpisodes)
   const startIndex = (page - 1) * 10; // Índice inicial del slice
   const endIndex = startIndex + 10; // Índice final del slice
   const residents = location?.residents.slice(startIndex, endIndex) || []; // Datos filtrados
-  
-  console.log('residents');
+
+  console.log('residents desde APP');
   console.log(residents)
 
   //const [data, setData] = useState(allDimensions)
@@ -100,9 +99,9 @@ console.log(allEpisodes)
   const [value, setValue] = useState('')
   const [dimensionSelected, setDimensionSelected] = useState()
 
-  const [currentSection, setCurrentSection] = useState()
+  const [currentSection, setCurrentSection] = useState('locations')
 
-  
+
 
   const onSuggestionsFetchRequested = ({ value }) => {
     console.log(filtrarDimensiones(value))
@@ -171,41 +170,44 @@ console.log(allEpisodes)
     }
   }
 
-  
+
 
   return (
 
     <div>
       <div className='banner'></div>
       <h1>Rick and Morty</h1>
-     <NavigationMenu/>
-        <Autosuggest
-          suggestions={dimensiones ? dimensiones : []}
-          onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={onSuggestionsClearRequested}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          inputProps={inputProps}
-          onSuggestionSelected={eventEnter}
-        />
-        <button onClick={searchLocation}>Chekar Esado</button>
-
-        {/*<form onSubmit={searchLocation}>
+      <NavigationMenu
+      setCurrentSection={setCurrentSection} />
+      
+      {/*<form onSubmit={searchLocation}>
         <input ref={inputLocation} type='text' />
         <button>Search</button>
   </form>*/}
-      
+
 
       {
         hasError
-          ? <h2>Hey you must provide an id from 1 to 126</h2>
-          :(
-            <>
+          ? 
+          <h2>Hey you must provide an id from 1 to 126</h2>
+          : (currentSection == 'locations'
+              ?
+              <>
+              <Autosuggest
+        suggestions={dimensiones ? dimensiones : []}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={inputProps}
+        onSuggestionSelected={eventEnter}
+      />
+      <button onClick={searchLocation}>Chekar Esado</button>
+    
               <LocationCard
                 location={location}
               />
-
-              {/*<div className='container__residents'>
+              <div className='container__residents'>
                 {
                   residents?.map(url => (
                     <ResidentCard
@@ -214,25 +216,26 @@ console.log(allEpisodes)
                     />
                   ))
                 }
-              </div>*/}
-              <div className='container__residents'>
+              </div>
+              <Pagination
+                count={parseInt(Math.ceil(totalResidents / 10), 10)}
+                page={page}
+                onChange={handleChange} />
+                </>
+              : (<div className='container__residents'>
                 {
+                
                   allEpisodes?.map(episode => (
                     <EpisodeCard
                       key={episode}
                       episode={episode}
                     />
+                    
                   ))
+                 
                 }
-              </div>
-
-              <Pagination
-                count={parseInt(Math.ceil(totalResidents / 10), 10)}
-                page={page}
-                onChange={handleChange} />
-
-
-            </>
+              </div>)
+            
           )
       }
 

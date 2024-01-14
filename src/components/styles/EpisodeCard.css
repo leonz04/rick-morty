@@ -1,0 +1,13 @@
+.episode{
+    min-width: 350px;
+    max-width: 350px;
+    border: 1px solid black
+}
+
+.container__characters{
+    display: flex ;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    padding: 1em;
+}
+

@@ -1,0 +1,7 @@
+.img__character{
+    display: flex !important;
+    width: 40px;
+    aspect-ratio: 1;
+    cursor:pointer;
+    border-radius: 50%;
+}

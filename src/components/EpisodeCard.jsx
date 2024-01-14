@@ -1,53 +1,43 @@
 
-import { useEffect, useState } from "react"
-import useFetch from "../hooks/useFetch"
 
-
-const EpisodeCard = ({episode}) => {
-
-
-    const[urlCharacter, setUrlCharacter]=useState()
-
-   const[character, getCharacter]=useFetch(urlCharacter)
-
-console.log('prueba url character');
-   console.log(character)
-
-useEffect(()=>{
-    getCharacter()
-},[])
-
-
-
-
-    
+import './styles/EpisodeCard.css'
+import ImgCharacter from "./ImgCharacter"
+const EpisodeCard = ({ episode }) => {
+  const characters = episode?.characters;
   return (
     <article className="episode">
-        <header className="episode__header">
-            <h2 className="episode__name">{episode.name}</h2>
-            <span className="episode__code">{episode.episode}</span>            
-        </header>        
-        <section className="episode__body">
-            <span className="air__date">{episode.air_date}</span>
-            <hr className="episode__hr"/>
-            <h3>Characters</h3>
-            <ul className="character__list">
-                <li className="character__item">
-                    <div className='container__episodes'>
-                {
-                 
-                  episode.characters.map(char => (
-                    console.log(episode.chatacacters)                   
-                    //<img className="resident__img" src={resident?.image}/>
-                                        
-                  ))
-                  
+      <header className="episode__header">
+        <h2 className="episode__name">{episode?.name}</h2>
+        <span className="episode__code">{episode?.episode}</span>
+      </header>
+      <section className="episode__body">
+      <span className="episode__label">Fecha emisión: </span>
+        <span className="air__date">{episode?.air_date}</span>
+        <hr className="episode__hr" />
+        
 
-                  }
-              </div>
-                </li>
-            </ul>
-        </section>
+        
+          
+          <details className='details'>
+          <summary className='summary'>Personajes</summary>
+          <div className='container__characters'>
+            {
+                characters.map(char => (
+                  <ImgCharacter
+                    key={char.id}
+                    char={char}
+                  />
+                  ))
+                  /*<ImgCharacter
+                    char={characters[0,1,2,3,4,5,6,7,8,9,10]}
+                  />*/
+
+                
+            }
+            </div>
+            </details>
+        
+      </section>
     </article>
   )
 }

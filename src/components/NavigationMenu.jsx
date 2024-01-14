@@ -1,12 +1,25 @@
 
-const NavigationMenu = () => {
+const NavigationMenu = ({setCurrentSection}) => {
+
+    const hadleEpisodes =()=>{
+        setCurrentSection ('')
+        
+        
+
+    }
+
+    const hadleDimensions =()=>{
+        setCurrentSection ('locations')
+
+    }
+
   return (
     <div>
         <header className='header'>
         <nav>
           <ul>
-            <li>Episodios</li>
-            <li>Dimensiones</li>
+            <li onClick={hadleEpisodes}>Episodios</li>
+            <li onClick={hadleDimensions}>Dimensiones</li>
           </ul>
         </nav>
         </header>

@@ -18,7 +18,10 @@
 
 .sugerencia{
     padding: 5px;
+    background-color: lightgray;
+    width: 200px;
 }
+
 
 .header{
     background-color: darkslategrey;
