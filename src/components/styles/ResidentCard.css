@@ -27,11 +27,12 @@
     padding-left: 0.7em;
     display: flex;
     align-items: center;
-    gap:0.8em
+    gap:0.8em;
 }
 
 .resident__status__circle{
     width: 15px;
+    height: 15px;
     aspect-ratio: 1;
     border-radius: 50%;
     background-color: #999;

@@ -41,7 +41,10 @@ function App() {
   const url = `https://rickandmortyapi.com/api/location/${inputValue}`
   const urlEpisodes = `https://rickandmortyapi.com/api/episode/${allEpisode}`
   const [location, getLocation, hasError] = useFetch(url)
-  const [allDimensions, getAllDimensions, doError] = useFetch(`https://rickandmortyapi.com/api/location/${allLocations}`)
+  const [allDimensions, getAllDimensions, errorDimension] = useFetch(`https://rickandmortyapi.com/api/location/${allLocations}`)
+  const [filterStatus,setFilterStatus] = useState('All') 
+  const [filteredResidents, setFilteredResidents] = useState([]);
+
 
   const [allEpisodes, getAllEpisodes, errorEpisodes] = useFetch(urlEpisodes)
 
@@ -49,7 +52,6 @@ function App() {
     getAllEpisodes();
   }, [])
 
-  console.log(allEpisodes)
 
 
   useEffect(() => {
@@ -69,8 +71,23 @@ function App() {
 
   }, [page, handleChange])
 
-  console.log('allDimensions')
-  console.log(allDimensions)
+
+  useEffect(() => {
+     // Filtrar residentes según el estado
+  const filtered = location?.residents.filter((resident) => {
+    // Lógica de filtrado según el estado deseado
+    if (filterStatus === 'Alive' && resident.status === 'Alive') {
+      return true;
+    } else if (filterStatus === 'Dead' && resident.status === 'Dead') {
+      return true;
+    }
+    // Agrega más lógica de filtrado según sea necesario
+
+    return false;
+  });
+
+  setFilteredResidents(filtered || []);
+    }, [filterStatus,location?.residents])
 
 
   /*const inputLocation = useRef()
@@ -82,12 +99,7 @@ function App() {
 
   }*/
 
-  const searchLocation = (event) => {
-
-    event.preventDefault();
-    setInputValue(dimensionSelected.id)
-
-  }
+  
 
   let startIndex = (page - 1) * limitResidents; // Índice inicial del slice
   let endIndex = startIndex + limitResidents; // Índice final del slice
@@ -102,6 +114,11 @@ function App() {
   const [dimensionSelected, setDimensionSelected] = useState()
 
   const [currentSection, setCurrentSection] = useState('locations')
+
+  const searchLocation = (event) => {
+    setInputValue(dimensionSelected.id)
+
+  }
 
 
 
@@ -180,7 +197,9 @@ function App() {
       currentSection={currentSection}
       setInputValue={setInputValue}
       setPage={setPage}
-      setLimitResidents={setLimitResidents} />
+      setLimitResidents={setLimitResidents}
+      setFilterStatus={setFilterStatus}
+       />
       
       {/*<form onSubmit={searchLocation}>
         <input ref={inputLocation} type='text' />
@@ -217,6 +236,7 @@ function App() {
                     <ResidentCard
                       key={url}
                       url={url}
+                      filterStatus={filterStatus}
                     />
                   ))
                 }

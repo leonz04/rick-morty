@@ -13,6 +13,22 @@
     column-gap: 1em;
     
 }
+.status__filter__item{
+    display: flex;
+    align-items: center;
+}
+.filter__title{
+    text-align: center;
+}
+.label__filter{
+    padding-left: 0.5em;
+    cursor: pointer;
+}
+
+.status__filter{
+    display: flex;
+    column-gap: 1em;
+}
 
 .nav__menu__item{
     min-width: 100px;
